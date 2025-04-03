@@ -13,7 +13,6 @@ test_routes:
 
 test_content:
 - Заметки в списке отсортированы по id по возрастанию
-- 
 
 
 test_logic:
