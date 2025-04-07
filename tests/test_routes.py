@@ -35,7 +35,7 @@ class TestRoutes(TestCase):
                 url = reverse(name)
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, HTTPStatus.OK)
-    
+
     def test_aviability_for_add_and_view_list_of_notes(self):
         """Проверка доступа к добавлению заметки и просмотра всех заметок."""
         self.client.force_login(self.another_user)
@@ -68,11 +68,11 @@ class TestRoutes(TestCase):
                     url = reverse(name, args=args)
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, status)
-    
+
     def test_redirect_for_anonymous_users(self):
         """Проверка переадресации анонимных пользователей."""
         login_url = reverse('users:login')
-        
+
         note_slug = self.note.slug
         urls = (
             (('notes:add'), None),
