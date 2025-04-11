@@ -40,8 +40,7 @@ def test_pages_avilability_for_auth_user(not_author_client, name):
     # Параметр expected_status - ожидаемый статус ответа.
     'parametrized_client, expected_status',
     # В кортеже с кортежами передаём значения для параметров:
-    (   
-        
+    (
         (pytest.lazy_fixture('not_author_client'), HTTPStatus.NOT_FOUND), 
         (pytest.lazy_fixture('author_client'), HTTPStatus.OK)
     ),
@@ -64,25 +63,22 @@ def test_pages_availability_for_users(
 
 
 @pytest.mark.parametrize(
-    'name, note_object',
+    'name, args',
     (
-        ('notes:detail', pytest.lazy_fixture('note')),
-        ('notes:edit', pytest.lazy_fixture('note')),
-        ('notes:delete', pytest.lazy_fixture('note')),
+        ('notes:detail', pytest.lazy_fixture('slug_for_args')),
+        ('notes:edit', pytest.lazy_fixture('slug_for_args')),
+        ('notes:delete', pytest.lazy_fixture('slug_for_args')),
         ('notes:add', None),
         ('notes:success', None),
         ('notes:list', None)
     ),
 )
 # Передаём в тест анонимный клиент, name проверяемых страниц и note_object:
-def test_redirects(client, name, note_object):
+def test_redirects(client, name, args):
     """Проверка редиректов для анонимного пользователя."""
     login_url = reverse('users:login')
-    # Формируем URL в зависимости от того, передан ли объект заметки:
-    if note_object is not None:
-        url = reverse(name, args=(note_object.slug,))
-    else:
-        url = reverse(name)
+    # Формируем URL
+    url = reverse(name, args=args)
 
     expected_url = f'{login_url}?next={url}'
     response = client.get(url)
