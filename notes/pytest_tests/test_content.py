@@ -35,6 +35,7 @@ def test_notes_list_for_different_users(
     )
 )
 def test_pages_contains_form(author_client, name, args):
+    """На страницы создания и редактирования заметки передаются формы."""
     url = reverse(name, args=args)
     response = author_client.get(url)
 
